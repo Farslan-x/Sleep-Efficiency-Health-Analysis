@@ -1,0 +1,990 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Şekil}
+\else
+  \newcommand\figurename{Şekil}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Tablo}
+\else
+  \newcommand\tablename{Tablo}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Krizantem},
+  pdfauthor={Bengisu ÖZBİLEN 21255061 Ferhat ARSLAN 21255601},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Krizantem}
+\author{Bengisu ÖZBİLEN 21255061 Ferhat ARSLAN 21255601}
+\date{}
+
+\begin{document}
+\maketitle
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hypertarget{verilerin-okutulmasi}{%
+\section{VERİLERİN OKUTULMASI}\label{verilerin-okutulmasi}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\NormalTok{Krizantem }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"Krizantem.xlsx"}\NormalTok{)}
+\FunctionTok{View}\NormalTok{(Krizantem)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{projenin-konusu-ve-amaci}{%
+\section{PROJENİN KONUSU VE AMACI}\label{projenin-konusu-ve-amaci}}
+
+Veri seti, bir grup denek ve onların uyku düzenleri hakkında bilgi
+içerir. Her test deneği benzersiz bir ``Subject ID'' ile tanımlanır ve
+yaşları ve cinsiyetleri de kaydedilir. ``Uyku Zamanı'' ve ``Uyanma
+zamanı'' özellikleri, her bir öznenin her gün ne zaman yatıp uyandığını
+gösterir ve ``Uyku süresi'' özelliği, her öznenin saat olarak uyuduğu
+toplam süreyi kaydeder. ``Uyku verimliliği'' özelliği, yatakta geçirilen
+sürenin gerçekte uykuda geçirilen süreye oranının bir ölçüsüdür. ``REM
+uyku yüzdesi'', ``Derin uyku yüzdesi'' ve ``Hafif uyku yüzdesi''
+özellikleri, her öznenin uykunun her aşamasında geçirdiği süreyi
+gösterir. ``Uyanışlar'' özelliği, her öznenin gece boyunca kaç kez
+uyandığını kaydeder.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\FunctionTok{library}\NormalTok{(dlookr)}
+\FunctionTok{library}\NormalTok{(flextable)}
+\FunctionTok{library}\NormalTok{ (ggpubr)}
+\FunctionTok{library}\NormalTok{(skimr)}
+\FunctionTok{library}\NormalTok{(dlookr)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{deux11fiux15fkenlerin-auxe7ux131klamalarux131}{%
+\section{Değişkenlerin
+Açıklamaları}\label{deux11fiux15fkenlerin-auxe7ux131klamalarux131}}
+
+Yas : Veri setinde bulunan bireylerin yaşlarını belirtir.
+
+Cinsiyet : Veri setinde bulunan bireylerin cinsiyetlerini belirtir.
+
+Yatma\_Vakti : Veri setinde bulunan bireylerin uyudukları saat ve
+tarihleri belirtir.
+
+Uyanmak\_Vakti : Veri setinde bulunan nbireylerin yandıkları saat ve
+tarihleri belirtir.
+
+Uyku\_Suresi2022 : Veri setinde bulunan bireylerin kaç saat uyuduklarını
+belirtir.
+
+Uyku\_Suresi2023 : Veri setinde bulunan bireylerin kaç saat uyuduklarını
+belirtir.
+
+REM\_Uyku\_Yuzdesi : Veri setinde bulunan bireylerin REM uykusunda
+geçirilen zamanın yüzdesini belirtir.
+
+Derin\_Uyku\_Yuzdesi : Veri setinde bulunan bireylerin Derin uykuda
+geçirilen zaman yüzdesini belirtir.
+
+Hafif\_Uyku\_Yuzdesi : Veri setinde bulunan bireylerin Hafif uykuda
+geçirilen zaman yüzdesini belirtir.
+
+Uyanıslar : Veri setinde bulunan bireylerin Uykudan kaç kez
+kalktıklarını belirtir.
+
+Kafein\_Turekitim : Veri setinde bulunan bireylerin Kafein tüketiminin
+mg değerlerini belirtir.
+
+Alkol\_Tutekimi : Veri setinde bulunan bireylerin Alkol tütekimini
+haftada ne kadar kullandığını belirtir.
+
+Sigara\_Icme\_Durumu2022 : Veri setinde bulunan bireylerin sigara içme
+durumunu ``EVET'' ``HAYIR'' olarak belirtir.
+
+Sigara\_Icme\_Durumu2023 : Veri setinde bulunan bireylerin sigara içme
+durumunu ``EVET'' ``HAYIR'' olarak belirtir.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#|label: tbl{-}Krizantem}
+\CommentTok{\#|tbl{-}cap: "Krizantem veri seti"}
+\FunctionTok{head}\NormalTok{(Krizantem)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 6 x 19
+     ID   Yas Cinsiyet Yatma_Vakti         Uyanma_Vakti        Uyku_su~1 Uyku_~2
+  <dbl> <dbl> <chr>    <dttm>              <dttm>                  <dbl> <chr>  
+1     1    65 Female   2021-03-06 01:00:00 2021-03-06 07:00:00       6   0.88   
+2     3    40 Female   2021-05-25 21:30:00 2021-05-25 05:30:00       8   0.89   
+3     4    40 Female   2021-11-03 02:30:00 2021-11-03 08:30:00       6   0.51   
+4     6    36 Female   2021-07-01 21:00:00 2021-07-01 04:30:00       7.5 0.9    
+5     7    27 Female   2021-07-21 21:00:00 2021-07-21 03:00:00       6   0.54   
+6     9    41 Female   2021-04-05 02:30:00 2021-04-05 08:30:00       6   0.79   
+# ... with 12 more variables: REM_Uyku_Yuzdesi2022 <dbl>,
+#   Derin_Uyku_Yuzdesi <dbl>, Hafif_Uyku_Yuzdesi <dbl>, Uyanıslar <chr>,
+#   Kafein_Tuketimi <chr>, Alkol_Tuketimi <chr>, Egzersiz_Sıklıgı <chr>,
+#   Uyku_Suresi_2023 <dbl>, Sigara_Icme_Durumu_2022 <chr>,
+#   Sigara_Icme_Durumu_2023 <chr>, Degisim <dbl>, REM_Uyku_Yuzdesi2023 <dbl>,
+#   and abbreviated variable names 1: Uyku_suresi_2022, 2: Uyku_Verimliligi
+\end{verbatim}
+
+\hypertarget{deux11fiux15fkenlerin-tipleri}{%
+\section{Değişkenlerin Tipleri}\label{deux11fiux15fkenlerin-tipleri}}
+
+Veri setindeki değişkenlerin istatistiksel analizler yapılması veya
+grafiklerin çizilmesi için uygun tipte olması gereklidir. Veri setindeki
+değişkenlerin tiplerini str() fonksiyonu ile görebiliriz. Yukarıdaki
+listede Krizantem veri setinde yer alan değişken isimleri, tipleri,
+gözlem sayıları ve değişkenlere ait bir kaç gözlem verilmektedir.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(Krizantem)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+tibble [452 x 19] (S3: tbl_df/tbl/data.frame)
+ $ ID                     : num [1:452] 1 3 4 6 7 9 10 13 15 16 ...
+ $ Yas                    : num [1:452] 65 40 40 36 27 41 11 30 36 32 ...
+ $ Cinsiyet               : chr [1:452] "Female" "Female" "Female" "Female" ...
+ $ Yatma_Vakti            : POSIXct[1:452], format: "2021-03-06 01:00:00" "2021-05-25 21:30:00" ...
+ $ Uyanma_Vakti           : POSIXct[1:452], format: "2021-03-06 07:00:00" "2021-05-25 05:30:00" ...
+ $ Uyku_suresi_2022       : num [1:452] 6 8 6 7.5 6 6 9 9 8.5 7.5 ...
+ $ Uyku_Verimliligi       : chr [1:452] "0.88" "0.89" "0.51" "0.9" ...
+ $ REM_Uyku_Yuzdesi2022   : num [1:452] 18 20 23 23 28 28 18 24 20 25 ...
+ $ Derin_Uyku_Yuzdesi     : num [1:452] 70 70 25 60 25 55 37 58 32 55 ...
+ $ Hafif_Uyku_Yuzdesi     : num [1:452] 12 10 52 17 47 17 45 18 48 20 ...
+ $ Uyanıslar              : chr [1:452] "0.0" "1.0" "3.0" "0.0" ...
+ $ Kafein_Tuketimi        : chr [1:452] "0.0" "0.0" "50.0" NA ...
+ $ Alkol_Tuketimi         : chr [1:452] "0.0" "0.0" "5.0" "0.0" ...
+ $ Egzersiz_Sıklıgı       : chr [1:452] "3.0" "3.0" "1.0" "1.0" ...
+ $ Uyku_Suresi_2023       : num [1:452] 8 8.5 6 6 6 9 10 10 7 6 ...
+ $ Sigara_Icme_Durumu_2022: chr [1:452] "Yes" "Yes" "Yes" "Yes" ...
+ $ Sigara_Icme_Durumu_2023: chr [1:452] "No" "No" "No" "No" ...
+ $ Degisim                : num [1:452] 2 0.5 0 -1.5 0 3 1 1 -1.5 -1.5 ...
+ $ REM_Uyku_Yuzdesi2023   : num [1:452] 16 22 23 24 24 24 25 19 15 19 ...
+\end{verbatim}
+
+\hypertarget{hipotez-testleri}{%
+\section{Hipotez Testleri}\label{hipotez-testleri}}
+
+Bir bölgede yaşayan insanların 2022 yılı içerisinde ortalama 1 günde en
+az 6 saat uyumaktadır.\%5 anlam düzeyinde bu iddia doğru mudur ?
+
+Mu = ortalama uyku zamanı
+
+H0: mu \textless= 6
+
+H1: mu \textgreater{} 6
+
+pdeğeri\textless alfa ise H0 ret, 1\textgreater0.05 olduğundan H0
+reddedilmez
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(}\AttributeTok{x=}\NormalTok{Krizantem}\SpecialCharTok{$}\NormalTok{Uyku\_suresi\_2022 , }\AttributeTok{alternative =} \StringTok{"l"}\NormalTok{, }\AttributeTok{mu=}\DecValTok{6}\NormalTok{, }\AttributeTok{conf.level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    One Sample t-test
+
+data:  Krizantem$Uyku_suresi_2022
+t = 35.957, df = 451, p-value = 1
+alternative hypothesis: true mean is less than 6
+95 percent confidence interval:
+     -Inf 7.532894
+sample estimates:
+mean of x 
+ 7.465708 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(Krizantem, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Yas))}\SpecialCharTok{+}
+\FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{fill=}\StringTok{"darkolivegreen3"}\NormalTok{, }\AttributeTok{colour=}\StringTok{"black"}\NormalTok{)}\SpecialCharTok{+}
+\FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{stat =} \StringTok{"count"}\NormalTok{, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{..count..),}\AttributeTok{hjust=}\SpecialCharTok{{-}}\FloatTok{0.4}\NormalTok{, }\AttributeTok{size =}\DecValTok{3}\NormalTok{)}\SpecialCharTok{+}
+\FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =}\StringTok{"rosybrown2"}\NormalTok{), }\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{8}\NormalTok{))}\SpecialCharTok{+}
+\FunctionTok{coord\_flip}\NormalTok{()}\SpecialCharTok{+}
+\FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"YAŞ"}\NormalTok{,}
+     \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,}
+     \AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Krizantem_files/figure-pdf/unnamed-chunk-6-1.pdf}
+
+}
+
+\end{figure}
+
+Bir grup denekler üzerinde uyku verimliliği incelenen insanların
+ortalama yaşlarının 28'den fazla olduğu iddia edilmektedir.Bu amaçla 451
+kişi test edilmiş ve veri setinde sonuçlar verilmiştir. Veriler normal
+dağılıma sahip olduğunu varsayarak \%5 anlam düzeyi için bu iddia doğru
+mudur ?
+
+Mu = ortalama yaş
+
+H0: mu = Popülasyonun yaş ortalaması 28'dir.
+
+H1: mu = Popülasyonun yaş ortalaması 28'den farklıdır.
+
+pdeğeri\textless alfa ise H0 ret, 2.2e-16\textless0.05 olduğundan H0
+reddedilir ve H1 hipotezi doğru kabul edilir.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(}\AttributeTok{x=}\NormalTok{Krizantem}\SpecialCharTok{$}\NormalTok{Yas, }\AttributeTok{mu=}\DecValTok{28}\NormalTok{, }\AttributeTok{alternative =} \StringTok{"g"}\NormalTok{, }\AttributeTok{conf.level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    One Sample t-test
+
+data:  Krizantem$Yas
+t = 19.829, df = 451, p-value < 2.2e-16
+alternative hypothesis: true mean is greater than 28
+95 percent confidence interval:
+ 39.2642     Inf
+sample estimates:
+mean of x 
+  40.2854 
+\end{verbatim}
+
+\hypertarget{eux15fli-guxf6zlemler-iuxe7in-hipotez-testi}{%
+\section{Eşli Gözlemler İçin Hipotez
+Testi}\label{eux15fli-guxf6zlemler-iuxe7in-hipotez-testi}}
+
+Sigara tüketiminin gittikçe arttığı gözlemlenen dünyamızda bu durumun
+uyku düzenine etkilerinin olduğunu inceleyen bir grup bilim insanı
+sigara tüketenlerin sigara tüketimini bıraktıktan sonra uyku süresinin
+arttığını iddia etmektedir.. Bu iddiayı test etmek için bir bölgedeki
+erkek ve kadınların son iki yılın uyku süresi karşılaştırılmıştır. \%5
+anlam düzeyinde bu iddiayı~test~ediniz
+
+H0: Mu = 0
+
+H1: Mu \textgreater{} 0
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(}\AttributeTok{x =}\NormalTok{Krizantem}\SpecialCharTok{$}\NormalTok{Uyku\_suresi\_2022, }\AttributeTok{y =}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{Uyku\_Suresi\_2023, }\AttributeTok{mu =} \DecValTok{0}\NormalTok{ , }\AttributeTok{alternative =} \StringTok{"g"}\NormalTok{, }\AttributeTok{conf.level =} \FloatTok{0.95}\NormalTok{, }\AttributeTok{paired =} \ConstantTok{TRUE}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Paired t-test
+
+data:  Krizantem$Uyku_suresi_2022 and Krizantem$Uyku_Suresi_2023
+t = -6.896, df = 451, p-value = 1
+alternative hypothesis: true mean difference is greater than 0
+95 percent confidence interval:
+ -0.6578841        Inf
+sample estimates:
+mean difference 
+     -0.5309735 
+\end{verbatim}
+
+\hypertarget{normallik-testi}{%
+\section{Normallik Testi}\label{normallik-testi}}
+
+Krizantem veri seti içerisinde Yas değişkeninin normal dağılımını
+histogram grafiği ile belirtiniz
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{hist}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{Yas, }
+     \AttributeTok{main=} \StringTok{"Yaş"}\NormalTok{,}
+     \AttributeTok{border =} \StringTok{"Gray11"}\NormalTok{,}
+     \AttributeTok{col =} \StringTok{"SpringGreen2"}\NormalTok{,}
+     \AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(Krizantem,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Yas))}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{dnorm, }\AttributeTok{args=}\FunctionTok{list}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(Krizantem}\SpecialCharTok{$}\NormalTok{Yas),}\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(Krizantem}\SpecialCharTok{$}\NormalTok{Yas)),}\AttributeTok{linewidth=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Krizantem_files/figure-pdf/unnamed-chunk-9-1.pdf}
+
+}
+
+\end{figure}
+
+\begin{verbatim}
+NULL
+\end{verbatim}
+
+\hypertarget{q---q-grafiux11fi}{%
+\section{Q - Q Grafiği}\label{q---q-grafiux11fi}}
+
+\hypertarget{shapiro-wilk-normallik-testi}{%
+\section{Shapiro-Wilk Normallik
+Testi}\label{shapiro-wilk-normallik-testi}}
+
+REM uyku yüzdesi 2022 için Shapiro-Wilk Normallik Testi
+
+H0: Verilerin içerisinde bulunan REM uyku yüzdesi değişkeni normal
+dağılıma sahiptir.
+
+H1: Verilerin içerisinde bulunan REM uyku yüzdesi normal dağılıma sahip
+değildir.
+
+Karar Kuralı: p-değeri\textless alfa ise H0 red,
+p-değeri\textgreater=alfa ise H0 reddedilemez.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(}\AttributeTok{x =}\NormalTok{Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2022)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Shapiro-Wilk normality test
+
+data:  Krizantem$REM_Uyku_Yuzdesi2022
+W = 0.95483, p-value = 1.549e-10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{hist}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2022, }
+     \AttributeTok{main=} \StringTok{""}\NormalTok{,}
+     \AttributeTok{border =} \StringTok{"Gray11"}\NormalTok{,}
+     \AttributeTok{col =} \StringTok{"SpringGreen2"}\NormalTok{,}
+     \AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(Krizantem,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{REM\_Uyku\_Yuzdesi2022))}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{dnorm, }\AttributeTok{args=}\FunctionTok{list}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2022),}\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2022)),}\AttributeTok{linewidth=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Krizantem_files/figure-pdf/unnamed-chunk-11-1.pdf}
+
+}
+
+\end{figure}
+
+\begin{verbatim}
+NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sort}\NormalTok{(Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2022)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  [1] 15 15 15 15 15 15 15 15 15 15 15 15 15 15 18 18 18 18 18 18 18 18 18 18 18
+ [26] 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18
+ [51] 18 18 18 18 18 18 18 18 18 18 18 18 18 19 19 19 19 19 19 19 19 19 19 19 20
+ [76] 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+[101] 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+[126] 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+[151] 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 21 22 22 22 22 22 22 22 22
+[176] 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22
+[201] 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22
+[226] 22 22 22 22 22 22 22 22 22 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23
+[251] 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23
+[276] 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 24 24 24 24 24 24 24 24 24 24
+[301] 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 25 25 25 25 25 25 25 25 25
+[326] 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 26 26 26
+[351] 26 26 26 26 26 26 26 26 26 26 26 26 27 27 27 27 27 27 27 27 27 27 27 27 27
+[376] 27 27 27 27 27 27 27 27 27 27 27 27 28 28 28 28 28 28 28 28 28 28 28 28 28
+[401] 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28
+[426] 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 30 30 30 30 30
+[451] 30 30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Krizantem, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ REM\_Uyku\_Yuzdesi2022))}\SpecialCharTok{+}
+  \FunctionTok{stat\_qq}\NormalTok{(}\AttributeTok{distribution =}\NormalTok{ qnorm )}\SpecialCharTok{+}
+  \FunctionTok{stat\_qq\_line}\NormalTok{(}\AttributeTok{distribution =}\NormalTok{ qnorm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Krizantem_files/figure-pdf/unnamed-chunk-13-1.pdf}
+
+}
+
+\end{figure}
+
+REM uyku yüzdesi 2023 için Shapiro-Wilk Normallik Testi
+
+H0: Verilerin içerisinde bulunan REM uyku yüzdesi değişkeni normal
+dağılıma sahiptir.
+
+H1: Verilerin içerisinde bulunan REM uyku yüzdesi normal dağılıma sahip
+değildir.
+
+Karar Kuralı: p-değeri\textless alfa ise H0 red,
+p-değeri\textgreater=alfa ise H0 reddedilemez.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(}\AttributeTok{x =}\NormalTok{Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2023)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Shapiro-Wilk normality test
+
+data:  Krizantem$REM_Uyku_Yuzdesi2023
+W = 0.93921, p-value = 1.24e-12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{hist}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2023, }
+     \AttributeTok{main=} \StringTok{""}\NormalTok{,}
+     \AttributeTok{border =} \StringTok{"Gray11"}\NormalTok{,}
+     \AttributeTok{col =} \StringTok{"SpringGreen2"}\NormalTok{,}
+     \AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(Krizantem,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{REM\_Uyku\_Yuzdesi2023))}\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =} \FunctionTok{after\_stat}\NormalTok{(density)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_function}\NormalTok{(}\AttributeTok{fun =}\NormalTok{dnorm, }\AttributeTok{args=}\FunctionTok{list}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2023),}\AttributeTok{sd=}\FunctionTok{sd}\NormalTok{(Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2023)),}\AttributeTok{linewidth=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Krizantem_files/figure-pdf/unnamed-chunk-15-1.pdf}
+
+}
+
+\end{figure}
+
+\begin{verbatim}
+NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sort}\NormalTok{(Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2023)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  [1] 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15 15
+ [26] 15 15 15 15 15 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16 16
+ [51] 16 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17
+ [76] 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 17 18 18 18 18 18 18
+[101] 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 18 19 19
+[126] 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19 19
+[151] 19 19 19 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+[176] 20 20 20 20 20 20 20 20 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21 21
+[201] 21 21 21 21 21 21 21 21 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22 22
+[226] 22 22 22 22 22 22 22 22 22 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23 23
+[251] 23 23 23 23 23 23 23 23 23 23 23 23 23 23 24 24 24 24 24 24 24 24 24 24 24
+[276] 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 24 25 25 25 25 25 25 25 25
+[301] 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 25 26 26 26
+[326] 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26 26
+[351] 26 26 26 26 26 26 26 26 27 27 27 27 27 27 27 27 27 27 27 27 27 27 27 27 27
+[376] 27 27 27 27 27 27 27 27 27 27 27 27 27 27 28 28 28 28 28 28 28 28 28 28 28
+[401] 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 29 29 29
+[426] 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29 29
+[451] 29 29
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Krizantem, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{sample =}\NormalTok{ REM\_Uyku\_Yuzdesi2023))}\SpecialCharTok{+}
+  \FunctionTok{stat\_qq}\NormalTok{(}\AttributeTok{distribution =}\NormalTok{ qnorm )}\SpecialCharTok{+}
+  \FunctionTok{stat\_qq\_line}\NormalTok{(}\AttributeTok{distribution =}\NormalTok{ qnorm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Krizantem_files/figure-pdf/unnamed-chunk-17-1.pdf}
+
+}
+
+\end{figure}
+
+Şimdi verileri normal dağılıma varsayarak hipotez testine devam edelim.
+H1 : M1!=M2 oldğundan t-testi aşağıdaki gibi yapılır.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2022, }\AttributeTok{y =}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2023, }\AttributeTok{mu =} \DecValTok{0}\NormalTok{ ,}\AttributeTok{alternative =}\StringTok{"t"}\NormalTok{, }\AttributeTok{var.equal =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Two Sample t-test
+
+data:  Krizantem$REM_Uyku_Yuzdesi2022 and Krizantem$REM_Uyku_Yuzdesi2023
+t = 2.0319, df = 902, p-value = 0.04246
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.0183258 1.0568954
+sample estimates:
+mean of x mean of y 
+ 22.61504  22.07743 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2022, }\AttributeTok{y =}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{REM\_Uyku\_Yuzdesi2023, }\AttributeTok{mu =} \DecValTok{0}\NormalTok{ ,}\AttributeTok{alternative =}\StringTok{"t"}\NormalTok{, }\AttributeTok{var.equal =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Welch Two Sample t-test
+
+data:  Krizantem$REM_Uyku_Yuzdesi2022 and Krizantem$REM_Uyku_Yuzdesi2023
+t = 2.0319, df = 862.42, p-value = 0.04247
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.01829378 1.05692746
+sample estimates:
+mean of x mean of y 
+ 22.61504  22.07743 
+\end{verbatim}
+
+Varyanslar eşit ve eşit değil durumları için p-değeri \%5'ten küçük
+olduğundan HO hipotezi reddedilir. Yani \%5 anlam düzeyinde REM uyku
+düzeylerinde değişim olmuştur.
+
+\hypertarget{regresyon-analizi}{%
+\section{Regresyon Analizi}\label{regresyon-analizi}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Krizantem, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Derin\_Uyku\_Yuzdesi, }\AttributeTok{y =}\NormalTok{Uyku\_Suresi\_2023))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{3}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{ , }\AttributeTok{color=}\StringTok{"Red"}\NormalTok{, }\AttributeTok{linewidth =}\DecValTok{1}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+`geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Krizantem_files/figure-pdf/unnamed-chunk-20-1.pdf}
+
+}
+
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model }\OtherTok{=} \FunctionTok{lm}\NormalTok{(Uyku\_Suresi\_2023}\SpecialCharTok{\textasciitilde{}}\NormalTok{Derin\_Uyku\_Yuzdesi, }\AttributeTok{data =}\NormalTok{ Krizantem)}
+\NormalTok{model}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = Uyku_Suresi_2023 ~ Derin_Uyku_Yuzdesi, data = Krizantem)
+
+Coefficients:
+       (Intercept)  Derin_Uyku_Yuzdesi  
+         7.9917898           0.0000926  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hatalar }\OtherTok{=} \FunctionTok{residuals}\NormalTok{(model)}
+\FunctionTok{head}\NormalTok{(hatalar)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+           1            2            3            4            5            6 
+ 0.001727936  0.501727936 -1.994104911 -1.997346030 -1.994104911  1.003116987 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qqnorm}\NormalTok{(hatalar)}
+\FunctionTok{qqline}\NormalTok{(hatalar)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Krizantem_files/figure-pdf/unnamed-chunk-20-2.pdf}
+
+}
+
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(hatalar)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Shapiro-Wilk normality test
+
+data:  hatalar
+W = 0.8875, p-value < 2.2e-16
+\end{verbatim}
+
+\hypertarget{baux11fux131msux131zlux131k-testi}{%
+\section{Bağımsızlık Testi}\label{baux11fux131msux131zlux131k-testi}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tablo }\OtherTok{=} \FunctionTok{rbind}\NormalTok{(Krizantem}\SpecialCharTok{$}\NormalTok{Yas,Krizantem}\SpecialCharTok{$}\NormalTok{Derin\_Uyku\_Yuzdesi)}
+\FunctionTok{chisq.test}\NormalTok{(tablo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Pearson's Chi-squared test
+
+data:  tablo
+X-squared = 2156.6, df = 451, p-value < 2.2e-16
+\end{verbatim}
+
+Ho : Bağımsızdır
+
+H1 : Bağımlıdır
+
+P değeri 0'a çok yakın bir değer çıktığı için H0 hipotezi reddediliyor
+yani Veri setinde bulunan ``Yaş'' ve ``Derin uyku yüzdesi'' birbiriyle
+ilişkilidir.
+
+\hypertarget{varyans-analizi}{%
+\section{Varyans Analizi}\label{varyans-analizi}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Krizantem}\SpecialCharTok{\%\textgreater{}\%}\FunctionTok{group\_by}\NormalTok{(Cinsiyet)}\SpecialCharTok{\%\textgreater{}\%}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{Ortalama=} \FunctionTok{mean}\NormalTok{(Hafif\_Uyku\_Yuzdesi))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+# A tibble: 2 x 2
+  Cinsiyet Ortalama
+  <chr>       <dbl>
+1 Female       25.2
+2 Male         23.9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Krizantem, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Cinsiyet, }\AttributeTok{y=}\NormalTok{Hafif\_Uyku\_Yuzdesi, }\AttributeTok{fill =}\NormalTok{Cinsiyet))}\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{Krizantem_files/figure-pdf/unnamed-chunk-22-1.pdf}
+
+}
+
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Female }\OtherTok{=}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{Hafif\_Uyku\_Yuzdesi[Krizantem}\SpecialCharTok{$}\NormalTok{Cinsiyet}\SpecialCharTok{==}\StringTok{"Female"}\NormalTok{]}
+\NormalTok{Male }\OtherTok{=}\NormalTok{ Krizantem}\SpecialCharTok{$}\NormalTok{Hafif\_Uyku\_Yuzdesi[Krizantem}\SpecialCharTok{$}\NormalTok{Cinsiyet}\SpecialCharTok{==}\StringTok{"Male"}\NormalTok{]}
+\FunctionTok{mean}\NormalTok{(Female)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 25.1875
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(Male)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 23.94737
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Normallik Testi}
+\FunctionTok{shapiro.test}\NormalTok{(Female)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Shapiro-Wilk normality test
+
+data:  Female
+W = 0.74467, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(Male)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    Shapiro-Wilk normality test
+
+data:  Male
+W = 0.74617, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Varyansların Eşitlik Testi}
+\FunctionTok{var.test}\NormalTok{(Female,Male)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+    F test to compare two variances
+
+data:  Female and Male
+F = 1.1848, num df = 223, denom df = 227, p-value = 0.204
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.9118571 1.5399232
+sample estimates:
+ratio of variances 
+          1.184802 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test }\OtherTok{=} \FunctionTok{aov}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ Hafif\_Uyku\_Yuzdesi}\SpecialCharTok{\textasciitilde{}}\NormalTok{Cinsiyet, }\AttributeTok{data =}\NormalTok{Krizantem)}
+\FunctionTok{summary}\NormalTok{(test)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+             Df Sum Sq Mean Sq F value Pr(>F)
+Cinsiyet      1    174   173.8   0.741   0.39
+Residuals   450 105589   234.6               
+\end{verbatim}
+
+Cinsiyetlere bağlı olarak ortalama hafif uyku yüzdesi değişmektemidir ?
+
+H0 : Mu1=Mu2
+
+H1 : Ortalama farklı
+
+P değeri 0.39 çıktığından dolayı 0'a ne kadar çok yakınsa H0 hipotezinin
+yanlışlığı doğrulanır. Sonuç olarak H0 hipotezi rededilmiştir.
+
+
+
+\end{document}

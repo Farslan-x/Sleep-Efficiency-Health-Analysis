@@ -1,0 +1,340 @@
+---
+title: "Krizantem"
+toc: true
+number-sections: true
+highlight-style: pygments
+format:
+  html: 
+    code-fold: false
+    html-math-method: katex
+    code-overflow: wrap
+crossref:
+  chapters: true
+  fig-title: '**Eekil**'
+  fig-labels: arabic
+  title-delim: "**.**"
+  tbl-title: '**Tablo**'
+editor: source
+author: Ferhat ARSLAN
+---
+
+# VERD0LERD0N OKUTULMASI
+
+```{r}
+#| warning: false
+library(readxl)
+Krizantem <- read_excel("data/Krizantem.xlsx")
+View(Krizantem)
+```
+
+# PROJEND0N KONUSU VE AMACI
+
+Veri seti, bir grup denek ve onlarD1n uyku dC<zenleri hakkD1nda bilgi iC'erir. Her test deneDi benzersiz bir "Subject ID" ile tanD1mlanD1r ve yaElarD1 ve cinsiyetleri de kaydedilir. "Uyku ZamanD1" ve "Uyanma zamanD1" C6zellikleri, her bir C6znenin her gC<n ne zaman yatD1p uyandD1DD1nD1 gC6sterir ve "Uyku sC<resi" C6zelliDi, her C6znenin saat olarak uyuduDu toplam sC<reyi kaydeder. "Uyku verimliliDi" C6zelliDi, yatakta geC'irilen sC<renin gerC'ekte uykuda geC'irilen sC<reye oranD1nD1n bir C6lC'C<sC<dC<r. "REM uyku yC<zdesi", "Derin uyku yC<zdesi" ve "Hafif uyku yC<zdesi" C6zellikleri, her C6znenin uykunun her aEamasD1nda geC'irdiDi sC<reyi gC6sterir. "UyanD1Elar" C6zelliDi, her C6znenin gece boyunca kaC' kez uyandD1DD1nD1 kaydeder.
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(readxl)
+library(knitr)
+library(kableExtra)
+library(dlookr)
+library(flextable)
+library (ggpubr)
+library(skimr)
+library(dlookr)
+```
+
+# DeDiEkenlerin AC'D1klamalarD1
+
+Yas : Veri setinde bulunan bireylerin yaElarD1nD1 belirtir.
+
+Cinsiyet : Veri setinde bulunan bireylerin cinsiyetlerini belirtir.
+
+Yatma_Vakti : Veri setinde bulunan bireylerin uyuduklarD1 saat ve tarihleri belirtir.
+
+Uyanmak_Vakti : Veri setinde bulunan nbireylerin yandD1klarD1 saat ve tarihleri belirtir.
+
+Uyku_Suresi2022 : Veri setinde bulunan bireylerin kaC' saat uyuduklarD1nD1 belirtir.
+
+Uyku_Suresi2023 : Veri setinde bulunan bireylerin kaC' saat uyuduklarD1nD1 belirtir.
+
+REM_Uyku_Yuzdesi : Veri setinde bulunan bireylerin REM uykusunda geC'irilen zamanD1n yC<zdesini belirtir.
+
+Derin_Uyku_Yuzdesi : Veri setinde bulunan bireylerin Derin uykuda geC'irilen zaman yC<zdesini belirtir.
+
+Hafif_Uyku_Yuzdesi : Veri setinde bulunan bireylerin Hafif uykuda geC'irilen zaman yC<zdesini belirtir.
+
+UyanD1slar : Veri setinde bulunan bireylerin Uykudan kaC' kez kalktD1klarD1nD1 belirtir.
+
+Kafein_Turekitim : Veri setinde bulunan bireylerin Kafein tC<ketiminin mg deDerlerini belirtir.
+
+Alkol_Tutekimi : Veri setinde bulunan bireylerin Alkol tC<tekimini haftada ne kadar kullandD1DD1nD1 belirtir.
+
+Sigara_Icme_Durumu2022 : Veri setinde bulunan bireylerin sigara iC'me durumunu "EVET" "HAYIR" olarak belirtir.
+
+Sigara_Icme_Durumu2023 : Veri setinde bulunan bireylerin sigara iC'me durumunu "EVET" "HAYIR" olarak belirtir.
+
+```{r}
+#| warning: false
+#|label: tbl-Krizantem
+#|tbl-cap: "Krizantem veri seti"
+head(Krizantem)
+
+```
+
+# DeDiEkenlerin Tipleri
+
+Veri setindeki deDiEkenlerin istatistiksel analizler yapD1lmasD1 veya grafiklerin C'izilmesi iC'in uygun tipte olmasD1 gereklidir. Veri setindeki deDiEkenlerin tiplerini str() fonksiyonu ile gC6rebiliriz. YukarD1daki listede Krizantem veri setinde yer alan deDiEken isimleri, tipleri, gC6zlem sayD1larD1 ve deDiEkenlere ait bir kaC' gC6zlem verilmektedir.
+
+```{r}
+#| warning: false
+str(Krizantem)
+```
+
+# Hipotez Testleri
+
+Bir bC6lgede yaEayan insanlarD1n 2022 yD1lD1 iC'erisinde ortalama 1 gC<nde en az 6 saat uyumaktadD1r.%5 anlam dC<zeyinde bu iddia doDru mudur ?
+
+Mu = ortalama uyku zamanD1
+
+H0: mu \<= 6
+
+H1: mu \> 6
+
+pdeDeri\<alfa ise H0 ret, 1\>0.05 olduDundan H0 reddedilmez
+
+```{r}
+#| warning: false
+t.test(x=Krizantem$Uyku_suresi_2022 , alternative = "l", mu=6, conf.level = 0.95)
+```
+
+```{r}
+#| warning: false
+ggplot(Krizantem, aes(x = Yas))+
+geom_bar(fill="IndianRed3", colour="black")+
+geom_text(stat = "count", aes(label=..count..),hjust=-0.4, size =3)+
+theme(plot.background = element_rect(fill ="Wheat2"), axis.text.x = element_text(size = 8))+
+coord_flip()+
+labs(title = "YAE",
+     x = NULL,
+     y = NULL)
+  
+```
+
+Bir grup denekler C<zerinde uyku verimliliDi incelenen insanlarD1n ortalama yaElarD1nD1n 28'den fazla olduDu iddia edilmektedir.Bu amaC'la 451 kiEi test edilmiE ve veri setinde sonuC'lar verilmiEtir. Veriler normal daDD1lD1ma sahip olduDunu varsayarak %5 anlam dC<zeyi iC'in bu iddia doDru mudur ?
+
+Mu = ortalama yaE
+
+H0: mu = PopC<lasyonun yaE ortalamasD1 28'dir.
+
+H1: mu = PopC<lasyonun yaE ortalamasD1 28'den farklD1dD1r.
+
+pdeDeri\<alfa ise H0 ret, 2.2e-16\<0.05 olduDundan H0 reddedilir ve H1 hipotezi doDru kabul edilir.
+
+```{r}
+#| warning: false
+t.test(x=Krizantem$Yas, mu=28, alternative = "g", conf.level = 0.95)
+```
+
+# EEli GC6zlemler D0C'in Hipotez Testi
+
+Sigara tC<ketiminin gittikC'e arttD1DD1 gC6zlemlenen dC<nyamD1zda bu durumun uyku dC<zenine etkilerinin olduDunu inceleyen bir grup bilim insanD1 sigara tC<ketenlerin sigara tC<ketimini bD1raktD1ktan sonra uyku sC<resinin arttD1DD1nD1 iddia etmektedir.. Bu iddiayD1 test etmek iC'in bir bC6lgedeki erkek ve kadD1nlarD1n son iki yD1lD1n uyku sC<resi karED1laEtD1rD1lmD1EtD1r. %5 anlam dC<zeyinde bu iddiayD1B testB ediniz
+
+H0: Mu = 0
+
+H1: Mu \> 0
+
+```{r}
+#| warning: false
+t.test(x =Krizantem$Uyku_suresi_2022, y = Krizantem$Uyku_Suresi_2023, mu = 0 , alternative = "g", conf.level = 0.95, paired = TRUE )
+```
+
+
+# Normallik Testi
+
+Krizantem veri seti iC'erisinde Yas deDiEkeninin normal daDD1lD1mD1nD1 histogram grafiDi ile belirtiniz
+
+```{r}
+#| warning: false
+library(tidyverse)
+hist(x = Krizantem$Yas, 
+     main= "",
+     xlab = "YaE",
+     ylab = "",
+     border = "black",
+     col = "SlateBlue",
+     freq = FALSE)+
+  ggplot(Krizantem,aes(x=Yas))+
+  geom_histogram(aes(y = after_stat(density)))+
+  geom_function(fun =dnorm, args=list(mean=mean(Krizantem$Yas),sd=sd(Krizantem$Yas)),linewidth=2)
+  
+```
+
+# Q - Q GrafiDi
+
+# Shapiro-Wilk Normallik Testi
+
+REM uyku yC<zdesi 2022 iC'in Shapiro-Wilk Normallik Testi
+
+H0: Verilerin iC'erisinde bulunan REM uyku yC<zdesi deDiEkeni normal daDD1lD1ma sahiptir.
+
+H1: Verilerin iC'erisinde bulunan REM uyku yC<zdesi normal daDD1lD1ma sahip deDildir.
+
+Karar KuralD1: p-deDeri\<alfa ise H0 red, p-deDeri\>=alfa ise H0 reddedilemez.
+
+```{r}
+#| warning: false
+shapiro.test(x =Krizantem$REM_Uyku_Yuzdesi2022)
+```
+
+```{r}
+#| warning: false
+library(tidyverse)
+hist(x = Krizantem$REM_Uyku_Yuzdesi2022, 
+     main= "",
+     xlab="Rem Uyku YC<zdesi 2022",
+     ylab ="",
+     border = "black",
+     col = "Turquoise4",
+     freq = FALSE)+
+  ggplot(Krizantem,aes(x=REM_Uyku_Yuzdesi2022))+
+  geom_histogram(aes(y = after_stat(density)))+
+  geom_function(fun =dnorm, args=list(mean=mean(Krizantem$REM_Uyku_Yuzdesi2022),sd=sd(Krizantem$REM_Uyku_Yuzdesi2022)),linewidth=2)
+```
+
+```{r}
+#| warning: false
+sort(Krizantem$REM_Uyku_Yuzdesi2022)
+```
+
+```{r}
+#| warning: false
+ggplot(data = Krizantem, aes(sample = REM_Uyku_Yuzdesi2022))+
+  stat_qq(distribution = qnorm )+
+  stat_qq_line(distribution = qnorm)
+  
+```
+
+REM uyku yC<zdesi 2023 iC'in Shapiro-Wilk Normallik Testi
+
+H0: Verilerin iC'erisinde bulunan REM uyku yC<zdesi deDiEkeni normal daDD1lD1ma sahiptir.
+
+H1: Verilerin iC'erisinde bulunan REM uyku yC<zdesi normal daDD1lD1ma sahip deDildir.
+
+Karar KuralD1: p-deDeri\<alfa ise H0 red, p-deDeri\>=alfa ise H0 reddedilemez.
+
+```{r}
+#| warning: false
+shapiro.test(x =Krizantem$REM_Uyku_Yuzdesi2023)
+```
+
+```{r}
+#| warning: false
+library(tidyverse)
+hist(x = Krizantem$REM_Uyku_Yuzdesi2023, 
+     main= "",
+     xlab="Rem Uyku YC<zdesi 2023",
+     ylab ="",
+     border = "black",
+     col = "IndianRed3",
+     freq = FALSE)+
+  ggplot(Krizantem,aes(x=REM_Uyku_Yuzdesi2023))+
+  geom_histogram(aes(y = after_stat(density)))+
+  geom_function(fun =dnorm, args=list(mean=mean(Krizantem$REM_Uyku_Yuzdesi2023),sd=sd(Krizantem$REM_Uyku_Yuzdesi2023)),linewidth=2)
+```
+
+```{r}
+#| warning: false
+sort(Krizantem$REM_Uyku_Yuzdesi2023)
+```
+
+```{r}
+ggplot(data = Krizantem, aes(sample = REM_Uyku_Yuzdesi2023))+
+  stat_qq(distribution = qnorm )+
+  stat_qq_line(distribution = qnorm)
+```
+
+Eimdi verileri normal daDD1lD1ma varsayarak hipotez testine devam edelim. H1 : M1!=M2 oldDundan t-testi aEaDD1daki gibi yapD1lD1r.
+
+```{r}
+t.test(x = Krizantem$REM_Uyku_Yuzdesi2022, y = Krizantem$REM_Uyku_Yuzdesi2023, mu = 0 ,alternative ="t", var.equal = TRUE)
+```
+
+```{r}
+t.test(x = Krizantem$REM_Uyku_Yuzdesi2022, y = Krizantem$REM_Uyku_Yuzdesi2023, mu = 0 ,alternative ="t", var.equal = FALSE)
+```
+
+Varyanslar eEit ve eEit deDil durumlarD1 iC'in p-deDeri %5'ten kC<C'C<k olduDundan HO hipotezi reddedilir. Yani %5 anlam dC<zeyinde REM uyku dC<zeylerinde deDiEim olmuEtur.
+
+
+# Varyans Analizi
+
+```{r}
+Krizantem%>%group_by(Cinsiyet)%>%summarise(Ortalama= mean(Hafif_Uyku_Yuzdesi))
+ggplot(data = Krizantem, aes(x = Cinsiyet, y=Hafif_Uyku_Yuzdesi, fill =Cinsiyet))+
+  geom_boxplot(color ="black")+
+  labs(title = "",
+       x = "Cinsiyet",
+       y = "Hafif Uyku YC<zdesi" )+
+  theme(plot.background = element_rect(fill ="Pink4"), axis.text.x = element_text(size = 8))
+
+Female = Krizantem$Hafif_Uyku_Yuzdesi[Krizantem$Cinsiyet=="Female"]
+Male = Krizantem$Hafif_Uyku_Yuzdesi[Krizantem$Cinsiyet=="Male"]
+mean(Female)
+mean(Male)
+# Normallik Testi
+shapiro.test(Female)
+shapiro.test(Male)
+
+#VaryanslarD1n EEitlik Testi
+var.test(Female,Male)
+
+test = aov(formula = Hafif_Uyku_Yuzdesi~Cinsiyet, data =Krizantem)
+summary(test)
+
+```
+
+Cinsiyetlere baDlD1 olarak ortalama hafif uyku yC<zdesi deDiEmektemidir ?
+
+H0 : Mu1=Mu2
+
+H1 : Ortalama farklD1
+
+P deDeri 0.39 C'D1ktD1DD1ndan dolayD1 0'a ne kadar C'ok yakD1nsa H0 hipotezinin yanlD1ElD1DD1 doDrulanD1r. SonuC' olarak H0 hipotezi rededilmiEtir.
+
+
+# Regresyon Analizi
+
+```{r}
+library(ggplot2)
+ggplot(data = Krizantem, aes(x = Derin_Uyku_Yuzdesi, y =Uyku_Suresi_2023))+
+  geom_point(size = 3)+
+  geom_smooth(method = "lm", se = FALSE , color="Red", linewidth =1 )
+model = lm(Uyku_Suresi_2023~Derin_Uyku_Yuzdesi, data = Krizantem)
+model
+hatalar = residuals(model)
+head(hatalar)
+qqnorm(hatalar)
+qqline(hatalar)
+shapiro.test(hatalar)
+```
+
+# SONUC RAPORU
+
+Bu projede uyku verimliliDi ile ilgili erkek ve kadD1nlarD1n bulunduDu farklD1 uyku tiplemelerinin bulunduDu istatistiksel analiz yapD1lacaktD1r.Bu analizde 450
+veriye sahip sleepy_efenccy veri seti kullanD1lacaktD1r.
+
+
+Veri seti aktif edildikten sonra head komutu ile veri setine ait ilk 6 gC6zlem yazdD1rD1lmD1EtD1r. Karakter tipine sahip veriler B+-as.factor komutu ile faktC6r
+tipine dC6nC<EtC<rC<lmC<EtC<r.Veri setine ait istatistik hesaplamalarD1 yapD1larak deDiEkenlerin frekanslarD1, ortalamalarD1, vb. istatistikler, veri seti hakkD1nda
+genel bilgiler summary komutu ile elde edilmiEtir. deDiEkenlere ait ortalama ve medyan deDerleri hesaplanmD1EtD1r.
+
+Hipotez testleri, C6ne sC<rdC<DC<mC<z varsayD1mlarD1n doDruluDunu araEtD1rmak iC'in kullandD1DD1mD1z etkili bir yC6ntemdir. Bu doDrultuda C'D1karsamalar yapmak
+iC'in bazD1 grafikler C'izdirilmiE ve yorumlama kD1smD1nda C6nemli bir gC6sterge olmuEtur. Grafikte, veri setinde bulunan bireylerin yaElarD1nD1n daDD1lD1mD1 verilmiEtir.
+60 yaED1ndan bC<yC<k ve  20 yaED1ndan az bireylerin testlere etki etmeyecek kadar az olduDunu sC6ylemek doDru bi yaklaED1m deDildir.
+
+Normallik testleri, bir veri setinde kullanmak istediDiniz verinin normal daDD1lD1ma sahip olup olmadD1DD1nD1 kontrol etmemizi saDlayan C6nemli bir testtir. Bu doDrultuda bir C'ok veri baElD1DD1 altD1nda denediDimizde hiC'bir verinin normal daDD1lD1ma sahip olmadD1DD1nD1 ve konunun anlam bC<tC<nlC<DC<nC< bozmamak adD1na "YaE" ve "RemUykuYC<zdesi" veri baElD1DD1 altD1nda ilerlemeye devam ettik.
+
+SonuC' olarak veri testleri bir hikaye gibi kullanD1p, testlerden C'D1kan sonuC'lar birleEtiDinde analizimiz ortaya C'D1kmD1E bulunuyor. Bu doDrultuda sigara kullanD1mD1 bD1rakD1ldD1ktan sonra uyku verimliliDi ve uyku sC<resi artD1ED1 gC6rC<lmektedir, YaE ile DerinUykuYC<zdesi bir birbiri ile baDlantD1lD1 buna orantD1lD1 Eekilde HafifUykuYC<zdesi de dahil diyebiliriz. Cinsiyetlere baDlD1 olarak varyans analizi yaptD1DD1mD1zda cinsiyetlere baDlD1 olarak deDiEmektedir.
+
+
