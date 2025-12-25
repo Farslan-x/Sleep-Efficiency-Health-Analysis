@@ -1,6 +1,6 @@
 # Sleep Efficiency & Health Analysis 💤
 
-This project involves the detailed analysis and visualization of crashes involving vehicles equipped with automated driving systems (ADS), based on data provided by the NHTSA (National Highway Traffic Safety Administration).
+This project involves the detailed statistical analysis and visualization of sleep patterns, efficiency, and the impact of lifestyle habits (smoking, alcohol, caffeine) on sleep quality, based on the "Krizantem" dataset.
 
 ## 👥 Project Author
 * **Ferhat ARSLAN**
